@@ -1,149 +1,140 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Live TV Indonesia</title>
+<meta charset="UTF-8">
+<title>STB TV Mode</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-        }
+<style>
+body {
+    margin: 0;
+    background: #0f172a;
+    font-family: Arial;
+    color: white;
+}
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-            font-size: 32px;
-        }
+h1 {
+    text-align: center;
+    padding: 15px;
+}
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
 
-        .channel {
-            background: #1e293b;
-            padding: 30px;
-            font-size: 22px;
-            text-align: center;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+/* CHANNEL */
+.channel {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 20px;
+    transition: 0.2s;
+}
 
-        .channel:hover {
-            background: #334155;
-            transform: scale(1.05);
-        }
+/* FOCUS (ini penting buat remote) */
+.channel.active {
+    border: 3px solid #38bdf8;
+    transform: scale(1.08);
+    background: #334155;
+}
 
-        .online {
-            color: #22c55e;
-        }
-
-        .offline {
-            color: #ef4444;
-        }
-    </style>
+.online { color: #22c55e; }
+.offline { color: #ef4444; }
+</style>
 </head>
 
 <body>
 
-    <h1>📺 EmwaiTV</h1>
+<h1>📺 STB LIVE TV</h1>
 
-    <div class="container">
+<div class="container" id="grid">
 
-        <!-- MNC GROUP -->
-        <div class="channel"
-            onclick="openPlayer('RCTI','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGcmN0aSUyRmluZXdzaWQmaGVpZ2h0PTEwMCUyNSZ3aWR0aD0xMDAlMjU=')">
-            RCTI<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGcmN0aSUyRmluZXdzaWQmaGVpZ2h0PTEwMCUyNSZ3aWR0aD0xMDAlMjU=">
+RCTI<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel"
-            onclick="openPlayer('GTV','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGZ3R2JTJGaW5ld3NpZCZoZWlnaHQ9MTAwJTI1JndpZHRoPTEwMCUyNQ==')">
-            GTV<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGZ3R2JTJGaW5ld3NpZCZoZWlnaHQ9MTAwJTI1JndpZHRoPTEwMCUyNQ==">
+GTV<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel"
-            onclick="openPlayer('iNews','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGaW5ld3MlMkZpbmV3c2lkJmhlaWdodD0xMDAlMjUmd2lkdGg9MTAwJTI1')">
-            iNews<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://20.detik.com/watch/livestreaming-trans7">
+TRANS7<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel"
-            onclick="openPlayer('MNCTV','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZlbWJlZC5yY3RpcGx1cy5jb20lMkZsaXZlJTJGbW5jdHYlMkZpbmV3c2lkJmhlaWdodD0xMDAlMjUmd2lkdGg9MTAwJTI1')">
-            MNCTV<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://www.cnnindonesia.com/tv/embed?ref=transmedia">
+CNN<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel"
-            onclick="openPlayer('IDX','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZjZG4tbGl2ZXR2LXN0dWRpby5tZXR1YmUuaWQlMkZpZHhjaGFubmVsLm0zdTgmaGVpZ2h0PTEwMCUyNSZ3aWR0aD0xMDAlMjU=')">
-            IDX<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://www.vidio.com/live/204-sctv-tv-stream/embed?autoplay=1&mute=0">
+SCTV<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel"
-            onclick="openPlayer('MNC NEWS','https://sindikasi.inews.id/embed/video/YWdlbnQ9ZGVza3RvcCZ1cmw9aHR0cHMlM0ElMkYlMkZjZG4tbGl2ZXR2LXN0dWRpby5tZXR1YmUuaWQlMkZtbmNuZXdzLm0zdTgmaGVpZ2h0PTEwMCUyNSZ3aWR0aD0xMDAlMjU=')">
-            MNC NEWS<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://www.dailymotion.com/embed/video/k236ofBIxajxDiti8CY?autoplay=1">
+METRO TV<br><span class="online">✔️</span>
+</div>
 
-        <!-- TRANS MEDIA -->
-        <div class="channel" onclick="openPlayer('TRANS7','https://20.detik.com/watch/livestreaming-trans7')">
-            TRANS7<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://www.dailymotion.com/embed/video/k46igSmSMGBIiWsXtWk?autoplay=1">
+KOMPAS TV<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel" onclick="openPlayer('TRANS TV','https://20.detik.com/watch/livestreaming-transtv')">
-            TRANS TV<br><span class="online">✔️ Online</span>
-        </div>
+<div class="channel" data-url="https://beritasatu.tv/playstream.php">
+BERITA SATU<br><span class="online">✔️</span>
+</div>
 
-        <div class="channel" onclick="openPlayer('CNN','https://www.cnnindonesia.com/tv/embed?ref=transmedia')">
-            CNN INDONESIA<br><span class="online">✔️ Online</span>
-        </div>
+</div>
 
-        <div class="channel">
-            CNBC INDONESIA<br><span class="offline">❌ Offline</span>
-        </div>
+<script>
+const channels = document.querySelectorAll(".channel");
+let index = 0;
 
-        <!-- LAINNYA -->
-        <div class="channel"
-            onclick="openPlayer('SCTV','https://www.vidio.com/live/204-sctv-tv-stream/embed?autoplay=true&mute=0')">
-            SCTV<br><span class="online">✔️ Online</span>
-        </div>
+// set awal
+channels[index].classList.add("active");
 
-        <div class="channel"
-            onclick="openPlayer('METRO TV','https://www.dailymotion.com/embed/video/k236ofBIxajxDiti8CY?autoplay=1&mute=0')">
-            METRO TV<br><span class="online">✔️ Online</span>
-        </div>
+// navigasi remote / keyboard
+document.addEventListener("keydown", (e) => {
 
-        <div class="channel"
-            onclick="openPlayer('KOMPAS TV','https://www.dailymotion.com/embed/video/k46igSmSMGBIiWsXtWk?autoplay=1&mute=0')">
-            KOMPAS TV<br><span class="online">✔️ Online</span>
-        </div>
+    channels[index].classList.remove("active");
 
-        <div class="channel" onclick="openPlayer('BERITA SATU','https://beritasatu.tv/playstream.php')">
-            BERITA SATU<br><span class="online">✔️ Online</span>
-        </div>
+    if (e.key === "ArrowRight") index++;
+    if (e.key === "ArrowLeft") index--;
+    if (e.key === "ArrowDown") index += 4;
+    if (e.key === "ArrowUp") index -= 4;
 
-    </div>
+    // batas
+    if (index < 0) index = 0;
+    if (index >= channels.length) index = channels.length - 1;
 
-    <script>
-        function openPlayer(name, url) {
+    channels[index].classList.add("active");
 
-            // paksa autoplay & unmute
-            if (!url.includes("mute=")) {
-                url += (url.includes("?") ? "&" : "?") + "autoplay=1&mute=0";
-            }
+    // auto scroll
+    channels[index].scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
-            // fullscreen dari klik user
-            const el = document.documentElement;
-            if (el.requestFullscreen) el.requestFullscreen();
+    // ENTER / OK
+    if (e.key === "Enter") {
+        playChannel(channels[index].dataset.url);
+    }
+});
 
-            // pindah halaman
-            window.location.href = "player.html?name=" + encodeURIComponent(name) + "&url=" + encodeURIComponent(url);
-        }
-    </script>
+function playChannel(url) {
+
+    if (!url.includes("mute=")) {
+        url += (url.includes("?") ? "&" : "?") + "autoplay=1&mute=0";
+    }
+
+    // fullscreen
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+
+    window.location.href = "player.html?url=" + encodeURIComponent(url);
+}
+</script>
 
 </body>
-
 </html>

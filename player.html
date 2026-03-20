@@ -1,58 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <style>
-        body {
-            margin: 0;
-            background: black;
-        }
-
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<style>
+body { margin:0; background:black; }
+iframe { width:100vw; height:100vh; border:none; }
+</style>
 </head>
 
 <body>
 
-    <iframe id="player" allow="autoplay; fullscreen"></iframe>
+<iframe id="player" allow="autoplay; fullscreen"></iframe>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        let url = params.get("url");
+<script>
+const params = new URLSearchParams(window.location.search);
+let url = params.get("url");
 
-        const iframe = document.getElementById("player");
+const iframe = document.getElementById("player");
 
-        // inject autoplay tambahan
-        if (!url.includes("autoplay")) {
-            url += (url.includes("?") ? "&" : "?") + "autoplay=1&mute=0";
-        }
+iframe.src = url;
 
-        iframe.src = url;
+// klik sekali untuk jaga fullscreen + unmute
+document.addEventListener("click", () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
 
-        // fallback fullscreen
-        document.addEventListener("click", () => {
-            const el = document.documentElement;
-            if (el.requestFullscreen) el.requestFullscreen();
-        }, { once: true });
+    try {
+        iframe.contentWindow.postMessage('{"event":"command","func":"unMute"}', '*');
+    } catch(e){}
+}, { once: true });
 
-        // force unmute (tidak 100% semua channel)
-        function forceUnmute() {
-            try {
-                iframe.contentWindow.postMessage('{"event":"command","func":"unMute"}', '*');
-            } catch (e) { }
-        }
-
-        setTimeout(forceUnmute, 1000);
-        setTimeout(forceUnmute, 3000);
-        setTimeout(forceUnmute, 5000);
-
-    </script>
+</script>
 
 </body>
-
 </html>
